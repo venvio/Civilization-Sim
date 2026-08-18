@@ -41,6 +41,10 @@ class Person {
             this->age = age;
         }
 
+        void incrementAge() {
+            age++;
+        }
+
         float getMutation() {
             return mutation;
         }
