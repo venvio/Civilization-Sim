@@ -66,6 +66,18 @@ class Person {
 
             return willDieResult;
         }
+
+        static float getDeathWeight() {
+            return 0.0;
+        }
+
+        static bool isMateSuccessful() {
+            return true;
+        }
+
+        static bool isMateable() {
+            return true;
+        }
 };
 
 #endif

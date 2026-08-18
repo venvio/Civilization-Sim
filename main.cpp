@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <numeric>
+#include <algorithm>
 #include "Person.h"
 
 void setupData(std::vector<Person>* population);
@@ -7,6 +10,7 @@ float getDeathWeight();
 int modifyData(std::vector<Person>* population);
 bool isMateSuccessful();
 bool isMateable();
+void displayYear(std::vector<Person>* population, int year)
 
 int main() {
     std::cout << "Start Sim" << std::endl;
@@ -23,12 +27,12 @@ int main() {
         year ++;
 
         modifyData(population);
+        
+        displayYear(population, year);
 
         if (year > 99) {
             keepGoing = false;
         }
-
-        std::cout << population->at(0).getIsDead() << " year: " << year << std::endl;
     }
 
     return 0;
@@ -57,11 +61,29 @@ int modifyData(std::vector<Person>* population) {
         population->at(i).incrementAge();
     }
 
-    //for each person
+    // make mating vector
+    std::vector<int> matingVector(population->size());
+    std::iota(matingVector.begin(), matingVector.end(), 0);
+
+    for (int i = 0; i < population->size(); i++) {
+        if (population->at(i).isMateable()) {
+            //remove value from matingVector
+            std::vector<int>::iterator matingVectorIndex = std::find(matingVector.begin(), matingVector.end(), 2);
+            if (matingVectorIndex != matingVector.end()) {
+                matingVector.erase(matingVectorIndex);
+            }
+            
+            Person mate1 = population->at(i);
+
+        }
+        else {
+            
+        }
+
+    }
         //mate
         //make array from 0 - len(population)
         //if currentPerson isMateable()
-            //remove from array
             //save as mate1
         //pick random value
             //if is mateable()
@@ -72,15 +94,13 @@ int modifyData(std::vector<Person>* population) {
     
     return 0;
 }
+void displayYear(std::vector<Person>* population, int year) {
 
-float getDeathWeight() {
-    return 0.0;
-}
+    std::cout << "-------------------------------" << std::endl;
+    
+    std::cout << "Year: " << year << std::endl;
 
-bool isMateSuccessful() {
-    return true;
-}
-
-bool isMateable() {
-    return true;
+    for (int i = 0; i < population->size(); i++) {
+        std::cout << "Person (" << i << ") is Dead? " << population->at(i).getIsDead() << " Age: " << population->at(i).getAge() << " Mutation: " << population->at(i).getMutation() << std::endl;
+    }
 }
