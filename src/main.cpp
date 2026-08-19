@@ -11,6 +11,7 @@ int modifyData(std::vector<Person>* population);
 bool isMateSuccessful();
 bool isMateable();
 void displayYear(std::vector<Person>* population, int year);
+void breedPopulation(std::vector<Person>* population);
 
 int main() {
     std::cout << "Start Sim" << std::endl;
@@ -26,11 +27,13 @@ int main() {
     while (keepGoing) {
         year ++;
 
+        // run simulation
         modifyData(population);
         
+        // display simulation data
         displayYear(population, year);
 
-        if (year > 99) {
+        if (year > 1000) {
             keepGoing = false;
         }
     }
@@ -50,20 +53,28 @@ void setupData(std::vector<Person>* population) {
 }
 
 int modifyData(std::vector<Person>* population) {
-    //for each person (el in array)
+    // phase 1: determine deaths
     for (int i = 0; i < population->size(); i++) {
-        //determine death
+        // death test
         if (Person::willDie(population->at(i).getAge(), population->at(i).getMutation())) {
-            //if they died
-            //mark death flag
+            // they died, mark flag
             population->at(i).setIsDead(true);
         }
 
+        // increment age if they survived
         population->at(i).incrementAge();
     }
 
+    // phase 2: breed
+    breedPopulation(population);
+
+    return 0;
+}
+
+void breedPopulation(std::vector<Person>* population) {
     // make mating vector
     std::vector<int> matingVector(population->size());
+    // fill vector with values 1,2,3,...,n
     std::iota(matingVector.begin(), matingVector.end(), 0);
 
     while(matingVector.size() > 0) {
@@ -84,6 +95,7 @@ int modifyData(std::vector<Person>* population) {
         // get mate 2
         int mate2Index = rand() % matingVector.size();
         int mate2Value = matingVector[mate2Index];
+
         //remove mate 2 from matingVector
         matingVectorIndex = std::find(matingVector.begin(), matingVector.end(), mate2Value);
         if (matingVectorIndex != matingVector.end()) {
@@ -94,12 +106,12 @@ int modifyData(std::vector<Person>* population) {
         int mate1Mutation = population->at(mate1Value).getMutation();
         int mate2Mutation = population->at(mate2Value).getMutation();
         Person offspring(mate1Mutation, mate2Mutation);
+
+        // add offspring to population
         population->push_back(offspring);
     }
-    
-    return 0;
-}
 
+}
 void displayYear(std::vector<Person>* population, int year) {
 
     for (int i = 0; i < population->size(); i++) {
