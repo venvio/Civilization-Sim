@@ -10,7 +10,7 @@ float getDeathWeight();
 int modifyData(std::vector<Person>* population);
 bool isMateSuccessful();
 bool isMateable();
-void displayYear(std::vector<Person>* population, int year)
+void displayYear(std::vector<Person>* population, int year);
 
 int main() {
     std::cout << "Start Sim" << std::endl;
@@ -35,6 +35,7 @@ int main() {
         }
     }
 
+    delete population;
     return 0;
 }
 
@@ -65,42 +66,43 @@ int modifyData(std::vector<Person>* population) {
     std::vector<int> matingVector(population->size());
     std::iota(matingVector.begin(), matingVector.end(), 0);
 
-    for (int i = 0; i < population->size(); i++) {
-        if (population->at(i).isMateable()) {
-            //remove value from matingVector
-            std::vector<int>::iterator matingVectorIndex = std::find(matingVector.begin(), matingVector.end(), 2);
-            if (matingVectorIndex != matingVector.end()) {
-                matingVector.erase(matingVectorIndex);
-            }
-            
-            Person mate1 = population->at(i);
-
-        }
-        else {
-            
+    while(matingVector.size() > 0) {
+        // get mate 1
+        int mate1Index = rand() % matingVector.size();
+        int mate1Value = matingVector[mate1Index];
+        //remove mate 1 from matingVector
+        std::vector<int>::iterator matingVectorIndex = std::find(matingVector.begin(), matingVector.end(), mate1Value);
+        if (matingVectorIndex != matingVector.end()) {
+            matingVector.erase(matingVectorIndex);
         }
 
+        // check for last person
+        if (matingVector.size() == 0) {
+            break;
+        }
+
+        // get mate 2
+        int mate2Index = rand() % matingVector.size();
+        int mate2Value = matingVector[mate2Index];
+        //remove mate 2 from matingVector
+        matingVectorIndex = std::find(matingVector.begin(), matingVector.end(), mate2Value);
+        if (matingVectorIndex != matingVector.end()) {
+            matingVector.erase(matingVectorIndex);
+        }
+
+        // breed
+        int mate1Mutation = population->at(mate1Value).getMutation();
+        int mate2Mutation = population->at(mate2Value).getMutation();
+        Person offspring(mate1Mutation, mate2Mutation);
+        population->push_back(offspring);
     }
-        //mate
-        //make array from 0 - len(population)
-        //if currentPerson isMateable()
-            //save as mate1
-        //pick random value
-            //if is mateable()
-                //remove and save as mate
-            //else
-                //remove
-        //mate(%) -> append new person to list with mutation as (x+y)/2 + rand()
     
     return 0;
 }
+
 void displayYear(std::vector<Person>* population, int year) {
 
-    std::cout << "-------------------------------" << std::endl;
-    
-    std::cout << "Year: " << year << std::endl;
-
     for (int i = 0; i < population->size(); i++) {
-        std::cout << "Person (" << i << ") is Dead? " << population->at(i).getIsDead() << " Age: " << population->at(i).getAge() << " Mutation: " << population->at(i).getMutation() << std::endl;
+        std::cout << "Year: " << year << " Person (" << i << ") is Dead? " << (population->at(i).getIsDead() ? "true" : "false") << " Age: " << population->at(i).getAge() << " Mutation: " << population->at(i).getMutation() << std::endl;
     }
 }

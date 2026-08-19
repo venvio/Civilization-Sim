@@ -1,4 +1,4 @@
-main.o: main.cpp Person.h
+main.o: main.cpp
 	g++ main.cpp -o main.o
 
 run: main.o

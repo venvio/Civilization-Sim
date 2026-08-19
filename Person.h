@@ -21,10 +21,12 @@ class Person {
         }
     
     public:
+        // constructor
         Person(float mutation1, float mutation2) {
             mutation = calculateMutation(mutation1, mutation2);
         }
 
+        // setters and getters
         bool getIsDead() {
             return isDead;
         }
@@ -53,10 +55,9 @@ class Person {
             this->mutation = mutation;
         }
 
+        // will determine if an individual person dies at start of new year
         static bool willDie(int age, float mutation) {
-
             // takes age and mutation and returns if they have died
-
             bool willDieResult = false;
 
             //TODO: make it real
