@@ -4,6 +4,7 @@
 #include <numeric>
 #include <algorithm>
 #include "Person.h"
+#include "helpers.h"
 
 void setupData(std::vector<Person>* population);
 float getDeathWeight();
@@ -102,15 +103,21 @@ void breedPopulation(std::vector<Person>* population) {
             matingVector.erase(matingVectorIndex);
         }
 
-        // breed
-        int mate1Mutation = population->at(mate1Value).getMutation();
-        int mate2Mutation = population->at(mate2Value).getMutation();
-        Person offspring(mate1Mutation, mate2Mutation);
-
-        // add offspring to population
-        population->push_back(offspring);
+        // roll for breed
+        if (matingRoll(mate1Value, mate2Value, population)) {
+            // breed
+            int mate1Mutation = population->at(mate1Value).getMutation();
+            int mate2Mutation = population->at(mate2Value).getMutation();
+            Person offspring(mate1Mutation, mate2Mutation);
+            
+            // add offspring to population
+            population->push_back(offspring);
+        }
+        else {
+            // breeding failed
+            continue;
+        }
     }
-
 }
 void displayYear(std::vector<Person>* population, int year) {
 
