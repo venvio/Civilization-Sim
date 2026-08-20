@@ -19,6 +19,17 @@ class Person {
 
             return newMutation;
         }
+
+        float getDeathWeight() {
+
+            float initialChanceOfDeath = 0.0;
+            float chanceOfDeathAtMaxAge = 100.0;
+            int maxAge = 25;
+
+            float deathWeight = ((chanceOfDeathAtMaxAge - initialChanceOfDeath) / maxAge) * this->age + initialChanceOfDeath - this->mutation;
+
+            return deathWeight;
+        }
     
     public:
         // constructor
@@ -56,20 +67,21 @@ class Person {
         }
 
         // will determine if an individual person dies at start of new year
-        static bool willDie(int age, float mutation) {
+        bool willDie() {
             // takes age and mutation and returns if they have died
             bool willDieResult = false;
 
-            //TODO: make it real
-            if (age > 70) {
-                willDieResult = true;
+            // as age goes up, so does death chance
+            float deathWeight = this->getDeathWeight();
+
+            if (deathWeight > 75) {
+                // randomize death
+                if (rand() % 2 == 0) {
+                    willDieResult = true;
+                }
             }
 
             return willDieResult;
-        }
-
-        static float getDeathWeight() {
-            return 0.0;
         }
 };
 
