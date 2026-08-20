@@ -1,7 +1,7 @@
 #include "Person.h"
 #include "helpers.h"
+#include "config.h"
 #include <random>
-#define CRIT_AGE 35.0
 
 // determines whether or not two mates produce offspring
 bool matingRoll(int mate1Value, int mate2Value, std::vector<Person>* population) {
@@ -28,7 +28,18 @@ bool matingRoll(int mate1Value, int mate2Value, std::vector<Person>* population)
     }
 }
 
-// upper is excluded
+// returns true if simulation should stop running
+bool checkStopCondition(std::vector<Person>* population, int year) {
+    if (population->size() == 0 || year == MAX_YEARS) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// returns random float between given lower and upper bound.
+// upper is exclusive
 float getRandomFloat(float lower, float upper) {
     std::random_device rd;
     std::mt19937 gen(rd());

@@ -11,7 +11,7 @@ float getDeathWeight();
 int modifyData(std::vector<Person>* population);
 bool isMateSuccessful();
 bool isMateable();
-void displayYear(std::vector<Person>* population, int year);
+void displaySummary(std::vector<Person>* population, int year);
 void breedPopulation(std::vector<Person>* population);
 
 int main() {
@@ -22,21 +22,20 @@ int main() {
     setupData(population);
 
     //sim loop
-    bool keepGoing = true;
+    bool stop = false;
     int year = 0;
 
-    while (keepGoing) {
+    while (!stop) {
         year ++;
 
         // run simulation
         modifyData(population);
         
         // display simulation data
-        displayYear(population, year);
+        displaySummary(population, year);
 
-        if (year > 1000) {
-            keepGoing = false;
-        }
+        // checks whether simulation should continue
+        stop = checkStopCondition(population, year);
     }
 
     delete population;
@@ -119,7 +118,7 @@ void breedPopulation(std::vector<Person>* population) {
         }
     }
 }
-void displayYear(std::vector<Person>* population, int year) {
+void displaySummary(std::vector<Person>* population, int year) {
 
     for (int i = 0; i < population->size(); i++) {
         std::cout << "Year: " << year << " Person (" << i << ") is Dead? " << (population->at(i).getIsDead() ? "true" : "false") << " Age: " << population->at(i).getAge() << " Mutation: " << population->at(i).getMutation() << std::endl;
