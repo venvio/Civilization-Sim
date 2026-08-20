@@ -9,8 +9,6 @@
 void setupData(std::vector<Person>* population);
 float getDeathWeight();
 int modifyData(std::vector<Person>* population);
-bool isMateSuccessful();
-bool isMateable();
 void displaySummary(std::vector<Person>* population, int year);
 void breedPopulation(std::vector<Person>* population);
 
@@ -54,11 +52,15 @@ void setupData(std::vector<Person>* population) {
 
 int modifyData(std::vector<Person>* population) {
     // phase 1: determine deaths
-    for (int i = 0; i < population->size(); i++) {
+    // we go backward through the vector so we can safely remove indices and not skip over subsequent people
+    for (int i = population->size() - 1; i >=0 ; i--) {
         // death test
         if (Person::willDie(population->at(i).getAge(), population->at(i).getMutation())) {
             // they died, mark flag
-            population->at(i).setIsDead(true);
+            //population->at(i).setIsDead(true);
+
+            // erase them from population
+            population->erase(population->begin() + i);
         }
 
         // increment age if they survived

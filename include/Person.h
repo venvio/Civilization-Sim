@@ -61,7 +61,7 @@ class Person {
             bool willDieResult = false;
 
             //TODO: make it real
-            if (age > 10) {
+            if (age > 70) {
                 willDieResult = true;
             }
 
@@ -70,14 +70,6 @@ class Person {
 
         static float getDeathWeight() {
             return 0.0;
-        }
-
-        static bool isMateSuccessful() {
-            return true;
-        }
-
-        static bool isMateable() {
-            return true;
         }
 };
 
