@@ -3,7 +3,7 @@ OBJ_DIR = bin
 
 TARGET = civsim # executable name
 CC = g++ # name of compiler
-CFLAGS = -Wall -Wextra -Iinclude # compilation flags
+CFLAGS = -g -Wall -Wextra -Iinclude -O2 # compilation flags
 
 SRC = $(wildcard $(SRC_DIR)/*.cpp) # compile all `.cpp` files in SRC_DIR
 OUT = $(OBJ_DIR)/$(TARGET)
@@ -19,3 +19,6 @@ run: all
 
 clean:
 	rm -f $(OUT)
+
+debug: all
+	gdb $(OUT)

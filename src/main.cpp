@@ -53,18 +53,17 @@ void setupData(std::vector<Person>* population) {
 int modifyData(std::vector<Person>* population) {
     // phase 1: determine deaths
     // we go backward through the vector so we can safely remove indices and not skip over subsequent people
+
     for (int i = population->size() - 1; i >=0 ; i--) {
         // death test
-        if (Person::willDie(population->at(i).getAge(), population->at(i).getMutation())) {
-            // they died, mark flag
-            //population->at(i).setIsDead(true);
-
+        if (population->at(i).willDie()) {
             // erase them from population
             population->erase(population->begin() + i);
-        }
 
-        // increment age if they survived
-        population->at(i).incrementAge();
+        } else {
+            // increment age if they survived
+            population->at(i).incrementAge();
+        }
     }
 
     // phase 2: breed
