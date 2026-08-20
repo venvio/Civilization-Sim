@@ -118,9 +118,8 @@ void breedPopulation(std::vector<Person>* population) {
         }
     }
 }
-void displaySummary(std::vector<Person>* population, int year) {
 
-    for (int i = 0; i < population->size(); i++) {
-        std::cout << "Year: " << year << " Person (" << i << ") is Dead? " << (population->at(i).getIsDead() ? "true" : "false") << " Age: " << population->at(i).getAge() << " Mutation: " << population->at(i).getMutation() << std::endl;
-    }
+// displays summary information
+void displaySummary(std::vector<Person>* population, int year) {
+    std::cout << "Year: " << year << " Population size: " << population->size() << std::endl;
 }
