@@ -107,16 +107,16 @@ void breedPopulation(std::vector<Person>* population) {
     }
 }
 
-int initializePopulation(std::vector<Person>* population, int n) {
+void initializePopulation(std::vector<Person>* population, int n) {
     for (int i = 0; i < n; i++) {
         //get 'parent' mutations
-        float mutation1 = getRandomFloat(0.0, 0.99);
-        float mutation2 = getRandomFloat(0.0, 0.99);
-        Person person = Person(mutation1, mutation2);
-        population->push_back(person);
     }
+    // create some people
+    Person person1 = Person(0.2, 0.4);
+    Person person2 = Person(0.9, 0.18);
 
-    return 0;
+    population->push_back(person1);
+    population->push_back(person2);
 }
 
 int runSimulation(std::vector<Person>* population) {

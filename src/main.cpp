@@ -3,13 +3,15 @@
 #include <vector>
 #include <iostream>
 
-
 int main() {
-    std::cout << "Start Sim" << std::endl;
+    std::cout << "Welcome to Civilization Sim." << std::endl;
+    std::cout << "How many people are in your initial colony?: " << std::endl;
+    int n;
+    std::cin >> n;
 
     // create population of people
     std::vector<Person>* population = new std::vector<Person>();
-    setupData(population);
+    initializePopulation(population, n);
 
     //sim loop
     bool stop = false;
