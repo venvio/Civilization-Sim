@@ -21,7 +21,6 @@ class Person {
         }
 
         float getDeathWeight() {
-
             float initialChanceOfDeath = 0.0;
             float chanceOfDeathAtMaxAge = 100.0;
             int maxAge = 25;
