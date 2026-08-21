@@ -56,7 +56,7 @@ float getRandomFloat(float lower, float upper) {
 
 // displays summary information
 void displaySummary(std::vector<Person>* population, int year) {
-    std::cout << "Year: " << year << " Population size: " << population->size() << std::endl;
+    std::cout << "Year " << year << " begins. Population is " << population->size() << std::endl;
 }
 
 void breedPopulation(std::vector<Person>* population) {
@@ -119,7 +119,7 @@ int initializePopulation(std::vector<Person>* population, int n) {
     return 0;
 }
 
-int runSimulation(std::vector<Person>* population) {
+int runSimulation(std::vector<Person>* population, int* deathCount) {
     // phase 1: determine deaths
     // we go backward through the vector so we can safely remove indices and not skip over subsequent people
     for (int i = population->size() - 1; i >=0 ; i--) {
@@ -127,6 +127,7 @@ int runSimulation(std::vector<Person>* population) {
         if (population->at(i).willDie()) {
             // erase them from population
             population->erase(population->begin() + i);
+            deathCount += 1;
 
         } else {
             // increment age if they survived
